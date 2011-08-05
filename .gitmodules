@@ -1,0 +1,6 @@
+[submodule "stdlib"]
+	path = stdlib
+	url = git://github.com/puppetlabs/puppetlabs-stdlib.git
+[submodule "concat"]
+	path = concat
+	url = git://github.com/ripienaar/puppet-concat.git
