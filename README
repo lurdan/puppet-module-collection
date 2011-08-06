@@ -1,0 +1,25 @@
+Puppet Module Collection
+
+Setup:
+1) clone this repository into your modules directory
+
+$ cd /path/to/your/manifest/dir
+$ git clone git://<remote> modules
+
+2) fetch external modules
+
+$ cd modules
+$ git submodule init
+$ git submodule update
+
+3) cancat site.pp to initialize
+
+$ cat site.pp >> /path/to/your/manifests/site.pp
+$ vi /path/to/your/manifests/site.pp
+
+4) add modules into your puppet-config
+
+# vi /etc/puppet/puppet.conf
+modulepath = ...:/path/to/your/manifest/dir/modules
+
+5) Now you can these modules in your nodes and s_* modules.
