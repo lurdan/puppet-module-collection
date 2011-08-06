@@ -1,0 +1,12 @@
+DEVICE=<%= name %>
+BOOTPROTO=<% if address == 'dhcp' %>dhcp<% else %>static
+#BROADCAST= broadcast
+#HWADDR= macaddress
+IPADDR=<%= address %>
+NETMASK=<%= netmask %>
+<% if network %>NETWORK= <%= network %><% end -%>
+<% end -%>
+ONBOOT=<% if enable %>yes<% else %>no<% end -%>
+IPV6INIT=<% if ipv6 %>yes<% else %>no<% end -%>
+TYPE=Ethernet
+<% if bonding %><%= bonding %><% end %>
