@@ -4,13 +4,10 @@
 class puppet (
   $version = 'present',
   $agent = 'active',
-  $agent_init_changes = false,
-  $agent_init_onlyif = '',
-  $master = false,
-  $master_init_changes = false,
-  $master_init_onlyif = ''
-)
-{
+  $agent_init_config = false,
+    $master = false,
+  $master_init_config = false
+  ) {
 
   anchor { 'puppet::begin': }
   anchor { 'puppet::end': }
@@ -23,8 +20,6 @@ class puppet (
         'active' => true,
         default => false,
       },
-      init_changes => $agent_init_changes,
-      init_onlyif => $agent_init_onlyif,
     }
   }
   if $master {
@@ -34,8 +29,6 @@ class puppet (
         'active' => true,
         default => false,
       },
-      init_changes => $master_init_changes,
-      init_onlyif => $master_init_onlyif,
     }
   }
 }

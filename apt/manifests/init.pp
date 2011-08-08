@@ -17,7 +17,7 @@ class apt ( $util = false ) {
       ensure => latest;
   }
 
-  if $util == true {
+  if $util {
     package { 'apt-utils': ensure => installed }
   }
 

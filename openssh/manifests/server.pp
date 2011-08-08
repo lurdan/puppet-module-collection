@@ -1,21 +1,18 @@
 class openssh::server (
   $version = 'present',
   $active = true,
-  $server_config = false,
-  $init_changes = false,
-  $init_onlyif = ''
-) {
+  $server_config = false
+  ) {
 
   package { 'openssh-server':
     ensure => $version,
   }
 
-  if $init_changes {
+  if $openssh::server_init_config {
     case $::operatingsystem {
       /(?i-mx:debian|ubuntu)/: {
         sysvinit::init::config { 'ssh':
-          changes => $init_changes,
-          onlyif => $init_onlyif,
+          changes => $openssh::server_init_config,
         }
       }
     }

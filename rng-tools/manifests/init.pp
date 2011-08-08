@@ -1,8 +1,7 @@
 # require lsb
 class rng-tools (
   $active = true,
-  $init_changes = false,
-  $init_onlyif = ''
+  $init_config = false
 ) {
 
   $pkg_name = $::operatingsystem ? {
@@ -14,10 +13,9 @@ class rng-tools (
     require => Package['lsb'],
   }
 
-  if $init_changes {
+  if $init_config {
     sysvinit::init::config { "$pkg_name":
-      changes => $init_changes,
-      onlyif => $init_onlyif,
+      changes => $init_config,
     }
   }
 

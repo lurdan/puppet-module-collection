@@ -2,10 +2,9 @@
 #
 class puppet::agent (
   $version = 'present',
-  $active = true,
-  $daemon_opts = ''
-)
-{
+  $active = true
+  ) {
+
   # workaround for facter dependency to ensure pciutils
   package {
     'facter': before => Package['puppet-agent'];
@@ -30,10 +29,9 @@ class puppet::agent (
       require => [ Anchor['puppet::agent::begin'], Package['lsb'] ];
   }
 
-  if $init_changes {
+  if $puppet::agent_init_config {
     sysvinit::init::config { "$puppet_agent":
-      changes => $init_changes,
-      onlyif => $init_onlyif,
+     changes => $puppet::agent_init_config,
     }
   }
 
@@ -48,3 +46,4 @@ class puppet::agent (
     before => Anchor['puppet::agent::end'],
   }
 }
+

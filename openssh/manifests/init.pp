@@ -4,8 +4,7 @@ class openssh (
   $client_config = false,
   $server = true,
   $server_config = false,
-  $server_init_changes = false,
-  $server_init_onlyif = ''
+  $server_init_config = false
 ) {
   if $client {
     class { 'openssh::client':
@@ -18,8 +17,6 @@ class openssh (
       version => $version,
       active => $server,
       server_config => $server_config,
-      init_changes => $server_init_changes,
-      init_onlyif => $server_init_onlyif,
     }
   }
 }

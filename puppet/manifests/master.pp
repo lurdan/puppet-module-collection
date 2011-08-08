@@ -7,10 +7,8 @@
 #
 class puppet::master (
   $version = 'present',
-  $active = true,
-  $init_changes = false,
-  $init_onlyif = ''
-) {
+  $active = true
+  ) {
 
   anchor { 'puppet::master::begin': }
   anchor { 'puppet::master::end': }
@@ -25,10 +23,9 @@ class puppet::master (
     require => [ Anchor['puppet::master::begin'], Package['puppet-agent'] ],
   }
 
-  if $init_changes {
+  if $puppet::master_init_config {
     sysvinit::init::config { "$puppet_master":
-      changes => $init_changes,
-      onlyif => $init_onlyif,
+      changes => $puppet::master_init_config,
     }
   }
 
