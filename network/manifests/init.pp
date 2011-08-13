@@ -17,18 +17,22 @@ class network (
   ) {
   case $::operatingsystem {
     /(?i-mx:debian|ubuntu)/: {
-      class { 'network::package::debian':
-        bonding => $bonding,
-        vlan => $vlan,
+      class {
+        'network::package::debian':
+          bonding => $bonding,
+          vlan => $vlan;
+        'network::config::debian':;
       }
-      class { 'network::config::debian': }
     }
     /(?i-mx:redhat|centos)/: {
-      class { 'network::package::redhat': }
-      class { 'network::config::redhat': }
+      class {
+        'network::package::redhat':;
+        'network::config::redhat':
+          vlan => $vlan;
+      }
     }
     default: {
-      err ("network module undefined.")
+      err ('unknown operating system.')
     }
   }
 

@@ -1,8 +1,8 @@
 define network::route (
   $dest,
-  $netmask,
   $gateway,
   $device,
+  $netmask = false,
   $order = '00'
   ) {
 

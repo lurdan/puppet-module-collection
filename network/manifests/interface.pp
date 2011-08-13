@@ -1,37 +1,63 @@
 define network::interface (
-  $ipv6         = false,
   $address      = 'dhcp',
   $netmask      = '255.255.255.0',
+  $macaddress   = false,
   $network      = false,
   $gateway      = false,
   $enable       = 'true',
+  $ipv6         = false,
+  $physdev      = false, #only for RHEL
+  $bond_master  = false, #only for RHEL, internal use
   $bond_slaves  = false,
-  $bond_mode    = 'active-backup',
-  $bond_options = '    bond-miimon 100
-    bond-downdelay 200
-    bond-updelay 200'
+  $bond_mode    = false, #'active-backup',
+  $bond_options = false #'    bond-miimon 100
+#    bond-downdelay 200
+#    bond-updelay 200'
   ) {
 
   case $::operatingsystem {
     /(?i-mx:debian|ubuntu)/: {
-      concat::fragment { "network-interface-$device":
+      concat::fragment { "network-interface-$name":
         target => '/etc/network/interfaces',
         content => template('network/debian/interface.erb'),
       }
     }
     /(?i-mx:redhat|centos)/: {
-      if defined(File['/etc/sysconfig/network']) {}
-      else {
-        file { '/etc/sysconfig/network':
-          mode => 600,
-          content => template('network/redhat/network.erb'),
-        }
-      }
-      file { "/etc/sysconfig/network-scripts/ifcfg-$device":
+
+      file { "/etc/sysconfig/network-scripts/ifcfg-$name":
         mode => 600,
         content => template('network/redhat/ifcfg.erb'),
       }
-      concat { "/etc/sysconfig/network-scripts/route-$device": }
+      concat { "/etc/sysconfig/network-scripts/route-$name": }
+
+      if $gateway {
+        concat::fragment { "network-gateway-$name":
+          target => '/etc/sysconfig/network',
+          content => "GATEWAY=$gateway",
+        }
+      }
+
+      if $bond_slaves {
+        # TODO: modprobe にbond option を追加
+        # "alias $name bonding\noptions bonding mode=.. miimon=..."
+
+        # 物理 IF 設定
+        network::interface::redhat::bond_slave { $bond_slaves:
+          bond_master => "$name",
+#          macaddress => $macaddress,
+        }
+      }
     }
+  }
+}
+
+define network::interface::redhat::bond_slave (
+  $bond_master,
+  $macaddress = false
+  ) {
+  network::interface { "$name":
+    address => false,
+    bond_master => $bond_master,
+#    macaddress => $macaddress,
   }
 }
