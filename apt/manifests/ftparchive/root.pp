@@ -4,12 +4,12 @@
 #  }
 define apt::ftparchive::root ( $rootdir ) {
 
-  exec { "$rootdir":
+  exec { "make-${rootdir}":
     command => "/bin/mkdir -p ${rootdir}/dists ${rootdir}/pool/dists ${rootdir}/.scratch",
   }
   file { "$rootdir":
     ensure => directory,
-    require => Exec["$rootdir"],
+    before => Exec["make-$rootdir"],
   }
 
   concat { "${rootdir}/apt-ftparchive.conf": }
@@ -19,9 +19,8 @@ define apt::ftparchive::root ( $rootdir ) {
     order => '00',
   }
 
-  exec { "ftparchive-$rootdir":
+  exec { "ftparchive-${rootdir}":
     command => "/usr/bin/apt-ftparchive generate ${rootdir}/apt-ftparchive.conf",
-    require => File["${rootdir}/apt-ftparchive.conf"]
+    require => Concat["${rootdir}/apt-ftparchive.conf"]
   }
-
 }

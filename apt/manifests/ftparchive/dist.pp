@@ -9,7 +9,7 @@
 #
 define apt::ftparchive::dist ( $rootdir, $archs, $sections = 'main', $source = 'false', $vendor, $keysig ) {
   File {
-    require => Exec["$rootdir"],
+    require => Exec["make-$rootdir"],
     notify => Exec["ftparchive-$rootdir"],
     recurse => true,
   }
@@ -30,13 +30,13 @@ define apt::ftparchive::dist ( $rootdir, $archs, $sections = 'main', $source = '
     content => template('apt/apt-ftparchive.conf-dist.erb'),
   }
 
-  exec { "aptrelease-$name-$rootdir":
+  exec { "aptrelease-${name}-${rootdir}":
     command => "/usr/bin/apt-ftparchive release -c ${rootdir}/apt-release-$name.conf ${rootdir}/dists/$name > ${rootdir}/dists/$name/Release",
-    require => File["${rootdir}/apt-release-$name.conf"]
+    require => File["${rootdir}/apt-release-${name}.conf"]
   }
 
-  exec { "aptrelease-$name-sign-$rootdir":
+  exec { "aptrelease-${name}-sign-${rootdir}":
     command => "/usr/bin/gpg --batch --yes --sign -ba --default-key $keysig -o ${rootdir}/dists/$name/Release.gpg ${rootdir}/dists/$name/Release",
-    require => Exec["aptrelease-$name-$rootdir"],
+    require => Exec["aptrelease-${name}-${rootdir}"],
   }
 }

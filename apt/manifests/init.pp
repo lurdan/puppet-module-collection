@@ -18,7 +18,8 @@ class apt ( $util = false ) {
   }
 
   if $util {
-    package { 'apt-utils': ensure => installed }
+    package { 'apt-utils': ensure => installed, }
+    Package['apt-utils'] -> Apt::Ftparchive::Root <| |>
   }
 
   exec {
