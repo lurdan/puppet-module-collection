@@ -1,9 +1,18 @@
 class sysvinit {
-  package { 'sysvinit':
-    name => $::operatingsystem ? {
-      /(?i-mx:debian|ubuntu)/ => 'sysvinit',
-      /(?i-mx:redhat|centos)/ => 'SysVinit',
-    },
+  case $::operatingsystem {
+    /(?i-mx:debian|ubuntu)/: {
+      package { 'sysvinit': }
+    }
+    /(?i-mx:redhat|centos)/: {
+      package {
+        'sysvinit':
+          name => $::lsbmajdistrelease ? {
+            '5' => 'SysVinit',
+            '6' => 'sysvinit-tools',
+          };
+        'initscripts': before => Package['sysvinit'];
+      }
+    }
   }
   Package['sysvinit'] -> Sysvinit::Init::Config <| |> -> Service <| |>
 
@@ -23,5 +32,6 @@ class sysvinit {
   exec { 'inittab_refreshed':
     command => '/sbin/telinit q',
     refreshonly => true,
+    onlyif => "/usr/bin/test -e /dev/initctl",
   }
 }
