@@ -1,6 +1,6 @@
 DEVICE=<%= name %>
-ONBOOT=<% if enable %>yes<% else %>no<% end -%>
-IPV6INIT=<% if ipv6 %>yes<% else %>no<% end -%>
+ONBOOT=<% if enable %>yes<% else %>no<% end %>
+IPV6INIT=<% if ipv6 %>yes<% else %>no<% end %>
 TYPE=Ethernet
 BOOTPROTO=<% case address -%>
 <% when 'dhcp' %>dhcp
@@ -19,7 +19,6 @@ BOOTPROTO=<% case address -%>
 <% end -%>
 <% if macaddress %>HWADDR=<%= macaddress %>
 <% end -%>
-<% if bonding %><%= bonding %><% end %>
 <% if bond_master %>MASTER=<%= bond_master %>
 SLAVE=yes
 <% end -%>

@@ -3,6 +3,7 @@ define network::interface (
   $netmask      = '255.255.255.0',
   $macaddress   = false,
   $network      = false,
+  $broadcast    = false,
   $gateway      = false,
   $enable       = 'true',
   $ipv6         = false,
