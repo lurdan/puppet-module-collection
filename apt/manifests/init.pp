@@ -11,15 +11,25 @@
 #
 # Sample Usage:
 #
-class apt ( $util = false ) {
+class apt ( $repo = false ) {
   package {
     'debian-archive-keyring':
       ensure => latest;
   }
 
-  if $util {
-    package { 'apt-utils': ensure => installed, }
-    Package['apt-utils'] -> Apt::Ftparchive::Root <| |>
+  case $repo {
+    'ftparchive': {
+      package { 'apt-utils': ensure => installed, }
+      Package['apt-utils'] -> Apt::Ftparchive::Root <| |>
+      file { '/usr/local/bin/update-apt-archive':
+        mode => 750, owner => root, group => 0,
+        source => 'puppet:///modules/apt/update-apt-archive',
+      }
+    }
+    'mini-dinstall': {
+    }
+    'reprepro': {
+    }
   }
 
   exec {
@@ -28,11 +38,6 @@ class apt ( $util = false ) {
 #    'apt-preseed-cleanup':
 #      command => '/usr/bin/rm -f /var/cache/debconf/*.preseed',
 #      refreshonly => true;
-  }
-
-  concat {'/etc/apt/preferences' :
-    warn => false,
-    before => Exec['apt-updated'];
   }
 
   Apt::Key <| |> -> Apt::Conf <| |> -> Exec['apt-updated']

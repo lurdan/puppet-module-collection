@@ -6,11 +6,21 @@
 # Requires:
 #   lsb
 #
-# Sample Usage:
-#   include apt::source::backports
-class apt::source::backports {
-  apt::source { 'backports':
-    url => 'http://backports.debian.org/debian-backports',
-    dist => "${lsbdistcodename}-backports",
+# Usage:
+#   class { 'apt::source::backports':
+#     priority => '200',
+#   }
+class apt::source::backports ( $priority = '600' ) {
+  if $::lsbdistcodename != 'sid' {
+    apt::source { 'backports':
+      url => 'http://backports.debian.org/debian-backports',
+      dist => "${::lsbdistcodename}-backports",
+    }
+    apt::preference { 'backports':
+      package => '*',
+      pin => 'release a=${::lsbdistcodename}-backports',
+      priority => $priority,
+    }
   }
 }
+
