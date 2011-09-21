@@ -1,8 +1,6 @@
 #!/bin/sh
 set -e
 
-### APT repository
-
 REPOROOT=$1
 GPGID=$2
 
@@ -16,17 +14,3 @@ do
 done
 
 exit 0
-
-#!/usr/bin/perl
-
-sub clean {
-}
-
-sub generate {
-
-}
-
-
-sub release {
-}
-
