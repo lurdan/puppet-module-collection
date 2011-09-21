@@ -1,0 +1,46 @@
+#!/bin/sh
+
+if [ ! -f /etc/krfilter/krfilter.start ]; then
+exit 0
+fi
+if [ ! -f /etc/krfilter/krfilter.stop ]; then
+exit 0
+fi
+
+case "$1" in
+start)
+echo "Starting firewall with the following config:"
+
+iptables -N KRFILTER
+iptables -N KRFILTERED
+
+sh /etc/krfilter/<%= target %>.sh.txt
+
+iptables -A KRFILTER -j ACCEPT
+
+iptables -A KRFILTERED -j LOG --log-prefix "Rej-TCP "
+iptables -A KRFILTERED -j DROP
+
+iptables -A INPUT -p tcp -m state --state NEW -j KRFILTER
+
+echo "."
+;;
+
+stop)
+echo "Stopping firewall with the following config:"
+
+iptables -D INPUT 1
+iptables -F KRFILTER
+iptables -X KRFILTER
+iptables -F KRFILTERED
+iptables -X KRFILTERED
+
+echo "."
+;;
+*)
+echo "Usage: /etc/init.d/ppp {start|stop|restart|force-reload}"
+exit 1
+;;
+esac
+exit 0
+
