@@ -4,3 +4,30 @@
 [submodule "concat"]
 	path = concat
 	url = git://github.com/ripienaar/puppet-concat.git
+[submodule "apt"]
+	path = apt
+	url = git://github.com/lurdan/puppet-apt.git
+[submodule "lsb"]
+	path = lsb
+	url = git://github.com/lurdan/puppet-lsb.git
+[submodule "network"]
+	path = network
+	url = git://github.com/lurdan/puppet-network.git
+[submodule "openssh"]
+	path = openssh
+	url = git://github.com/lurdan/puppet-openssh.git
+[submodule "puppet"]
+	path = puppet
+	url = git://github.com/lurdan/puppet-puppet.git
+[submodule "rng-tools"]
+	path = rng-tools
+	url = git://github.com/lurdan/puppet-rng-tools.git
+[submodule "sysvinit"]
+	path = sysvinit
+	url = git://github.com/lurdan/puppet-sysvinit.git
+[submodule "apt-cacher-ng"]
+	path = apt-cacher-ng
+	url = git://github.com/lurdan/puppet-apt-cacher-ng.git
+[submodule "krfilter"]
+	path = krfilter
+	url = git://github.com/lurdan/puppet-krfilter.git

@@ -1,9 +1,0 @@
-#!/bin/sh
-
-cd $(cd $(dirname $0);pwd)/krfilter
-for N in ALL ALL2 KR CN KRCN HK TW IN ID PH TH
-do
-  wget -N http://www.hakusan.tsg.ne.jp/tjkawa/lib/krfilter/${N}.sh.txt
-done
-
-
