@@ -31,3 +31,12 @@
 [submodule "krfilter"]
 	path = krfilter
 	url = git://github.com/lurdan/puppet-krfilter.git
+[submodule "dnsmasq"]
+	path = dnsmasq
+	url = git://github.com/lurdan/puppet-dnsmasq.git
+[submodule "lvm"]
+	path = lvm
+	url = git://github.com/puppetlabs/puppet-lvm.git
+[submodule "font"]
+	path = font
+	url = git://github.com/lurdan/puppet-font.git
