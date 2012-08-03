@@ -43,3 +43,12 @@
 [submodule "kerberos"]
 	path = kerberos
 	url = git://github.com/lurdan/puppet-kerberos.git
+[submodule "apache2"]
+	path = apache2
+	url = git://github.com/lurdan/puppet-apache2.git
+[submodule "mysql"]
+	path = mysql
+	url = git://github.com/lurdan/puppet-mysql.git
+[submodule "request-tracker"]
+	path = request-tracker
+	url = git://github.com/lurdan/puppet-request-tracker.git
