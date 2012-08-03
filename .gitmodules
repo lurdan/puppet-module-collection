@@ -40,3 +40,6 @@
 [submodule "font"]
 	path = font
 	url = git://github.com/lurdan/puppet-font.git
+[submodule "kerberos"]
+	path = kerberos
+	url = git://github.com/lurdan/puppet-kerberos.git
