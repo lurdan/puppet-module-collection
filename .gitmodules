@@ -49,6 +49,6 @@
 [submodule "mysql"]
 	path = mysql
 	url = git://github.com/lurdan/puppet-mysql.git
-[submodule "request-tracker"]
-	path = request-tracker
-	url = git://github.com/lurdan/puppet-request-tracker.git
+[submodule "requesttracker"]
+	path = requesttracker
+	url = git://github.com/lurdan/puppet-requesttracker.git
