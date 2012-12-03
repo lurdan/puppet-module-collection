@@ -52,3 +52,6 @@
 [submodule "requesttracker"]
 	path = requesttracker
 	url = git://github.com/lurdan/puppet-requesttracker.git
+[submodule "selinux"]
+	path = selinux
+	url = git://github.com/lurdan/puppet-selinux.git
